@@ -10,7 +10,7 @@ const Layout = (props: Props) => {
     <>
       <Navbar />
       <main className="container mx-auto">{props.children}</main>
-      <footer>Footer</footer>
+      {/* <footer>Footer</footer> */}
     </>
   );
 };
