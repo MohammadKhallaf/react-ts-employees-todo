@@ -1,11 +1,16 @@
-import React from "react";
-import { useAppSelector } from "../app/store";
+import React, { useEffect } from "react";
+import { fetchAllTasks } from "../app/features/tasksSlice";
+import { useAppDispatch, useAppSelector } from "../app/store";
 import TaskRow from "./TaskRow";
 
 type Props = {};
 
 const TaskList = (props: Props) => {
+  const dispatch = useAppDispatch();
   const tasks = useAppSelector((state) => state.tasks.tasks);
+  useEffect(() => {
+    dispatch(fetchAllTasks());
+  }, []);
 
   return (
     <table className="w-full mt-5 ">

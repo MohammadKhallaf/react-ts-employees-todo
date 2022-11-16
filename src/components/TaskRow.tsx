@@ -9,7 +9,7 @@ type Props = {
 const TaskRow = ({ task }: Props) => {
   const [content, setContent] = useState(task.content);
   const [edit, setEdit] = useState(false);
-  const users = useAppSelector((state) => state.users);
+  const users = useAppSelector((state) => state.user.users);
   const dispatch = useAppDispatch();
   const taskUser = users.find((user) => user.id === task.user_id);
   const updateTaskHandler = () => {
@@ -24,7 +24,9 @@ const TaskRow = ({ task }: Props) => {
     <tr>
       <td className="text-center">{task.id}</td>
 
-      <td className="text-center">{taskUser?.name}</td>
+      <td className="text-center">
+        {taskUser?.first_name} {taskUser?.last_name}
+      </td>
       <td className="text-center">
         <input
           type="text"
