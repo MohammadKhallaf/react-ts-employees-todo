@@ -1,5 +1,4 @@
 import React from "react";
-import { addTask } from "../app/features/tasksSlice";
 import { useAppDispatch } from "../app/store";
 import TaskList from "../components/TaskList";
 
@@ -8,11 +7,16 @@ type Props = {};
 const UsersPage = (props: Props) => {
   const dispatch = useAppDispatch();
   const addTaskHandler = () => {
-    dispatch(addTask("content"));
+    // dispatch(addTask("content"));
   };
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto flex flex-col">
+        <div className="flex flex-col text-center w-full mb-12">
+          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+            To Do List
+          </h1>
+        </div>
         <div className="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
           <div className="relative flex-grow w-full">
             <label
@@ -25,7 +29,7 @@ const UsersPage = (props: Props) => {
               type="text"
               id="full-name"
               name="full-name"
-              className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              className="app-input-text "
             />
           </div>
 
