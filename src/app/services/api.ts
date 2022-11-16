@@ -25,7 +25,7 @@ export const useRegister = () => {
   };
 };
 
-let { error } = await supabase.auth.signOut();
+// let { error } = await supabase.auth.signOut();
 // console.log(data);
 // const { data: user } = await supabase
 //   .from("profiles")
