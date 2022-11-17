@@ -1,19 +1,21 @@
-import React, { FormEvent } from "react";
-import { supabase, useRegister } from "../app/services/api";
+import React from "react";
+import { Link } from "react-router-dom";
+import { useRegister } from "../app/services/api";
 
-type Props = {};
 
-const RegisterPage = (props: Props) => {
+const RegisterPage = () => {
   const register = useRegister();
 
   const registerHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     const target = e.target as typeof e.target & {
       email: { value: string };
       password: { value: string };
       first_name: { value: string };
       last_name: { value: string };
     };
+
     const email = target.email.value;
     const password = target.password.value;
     const first_name = target.first_name.value;
@@ -24,7 +26,8 @@ const RegisterPage = (props: Props) => {
       first_name,
       last_name
     );
-    console.log(data);
+
+    //TODO: build UI indication of success
   };
   return (
     <div className="container mx-auto ">
@@ -123,10 +126,18 @@ const RegisterPage = (props: Props) => {
               </div>
             </div>
 
-            <div className="flex items-center justify-center mt-8">
+            <div className="flex items-center justify-center mt-8 gap-3">
               <button className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
                 Register
               </button>
+              <Link to="/login" className="flex items-center justify-center">
+                <button
+                  className="text-white py-2 px-4 uppercase rounded bg-cyan-500 hover:bg-cyan-700 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                  type="button"
+                >
+                  Login
+                </button>
+              </Link>
             </div>
           </form>
         </div>
