@@ -1,10 +1,12 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import App from "../../App";
+import AdminRoutes from "../../components/routers/AdminRoutes";
 import AuthRoutes from "../../components/routers/AuthRoutes";
 import Layout from "../../layout/Layout";
 import GroupsPage from "../../pages/GroupsPage";
 import HomePage from "../../pages/HomePage";
 import LoginPage from "../../pages/LoginPage";
+import NotificationPage from "../../pages/NotificationPage";
 import RegisterPage from "../../pages/RegisterPage";
 import TasksPage from "../../pages/TasksPage";
 import UsersPage from "../../pages/UsersPage";
@@ -32,12 +34,16 @@ export const router = createBrowserRouter([
 
       {
         path: "users",
-
-        element: <UsersPage />,
+        element: (
+          <AuthRoutes>
+            <AdminRoutes>
+              <UsersPage />
+            </AdminRoutes>
+          </AuthRoutes>
+        ),
       },
       {
         path: "tasks",
-
         element: (
           <AuthRoutes>
             <TasksPage />
@@ -49,7 +55,20 @@ export const router = createBrowserRouter([
 
         element: (
           <AuthRoutes>
-            <GroupsPage />
+            <AdminRoutes>
+              <GroupsPage />
+            </AdminRoutes>
+          </AuthRoutes>
+        ),
+      },
+      {
+        path: "notifications",
+
+        element: (
+          <AuthRoutes>
+            <AdminRoutes>
+              <NotificationPage />
+            </AdminRoutes>
           </AuthRoutes>
         ),
       },
@@ -57,14 +76,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: (
-      <AuthRoutes>
-        <LoginPage />
-      </AuthRoutes>
-    ),
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />,
+    element: <LoginPage />,
+    loader: async () => {
+      console.log("router login");
+      const { data: user } = await supabase.auth.getUser();
+      return user;
+    },
   },
 ]);

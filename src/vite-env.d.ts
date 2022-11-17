@@ -1,7 +1,9 @@
 /// <reference types="vite/client" />
 
+type uuid = string | number | null;
+
 interface User {
-  id: string | number | null;
+  id: uuid;
   first_name: string | null;
   last_name: string | null;
   is_admin: boolean;
@@ -15,4 +17,9 @@ interface Task {
   content: string;
   created_at: string;
   is_complete: boolean;
+}
+
+interface Group {
+  id: number;
+  label: string;
 }

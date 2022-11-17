@@ -11,7 +11,10 @@ import {
   updateTaskStateThunk,
   updateTaskThunk,
 } from "../../app/features/task/update";
-import { deleteTaskThunk } from "../../app/features/task/delete";
+import {
+  deleteTaskThunk,
+  notifyTaskThunk,
+} from "../../app/features/task/delete";
 type Props = {
   task: Task;
 };
@@ -20,6 +23,7 @@ const TaskRow = ({ task }: Props) => {
   const [content, setContent] = useState(task.content);
   const [edit, setEdit] = useState(false);
   const users = useAppSelector((state) => state.user.users);
+  const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const taskUser = users.find((user) => user.id === task.user_id);
   const updateTaskHandler = () => {
@@ -27,7 +31,11 @@ const TaskRow = ({ task }: Props) => {
     setEdit(false);
   };
   const deleteTaskHandler = () => {
-    dispatch(deleteTaskThunk(task.id));
+    if (user.is_admin) {
+      dispatch(deleteTaskThunk(task.id));
+    } else {
+      dispatch(notifyTaskThunk({ user_id: user.id, task_id: task.id }));
+    }
     setEdit(false);
   };
   return (
@@ -55,7 +63,8 @@ const TaskRow = ({ task }: Props) => {
       <td className="text-center">{task.id}</td>
 
       <td className="text-center">
-        {taskUser?.first_name} {taskUser?.last_name}
+        {taskUser?.first_name || user.first_name}{" "}
+        {taskUser?.last_name || user.last_name}
       </td>
       <td className="text-center">
         <input

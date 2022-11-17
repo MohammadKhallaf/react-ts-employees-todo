@@ -1,5 +1,6 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getUserProfile } from "../app/features/userSlice";
 import { supabase } from "../app/services/api";
 import { useAppDispatch } from "../app/store";
@@ -7,6 +8,13 @@ import { useAppDispatch } from "../app/store";
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const logged_user = useLoaderData() as { user: User };
+  useEffect(() => {
+    if (logged_user.user) {
+      navigate("/");
+    }
+  }, []);
   const loginHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -24,10 +32,9 @@ const LoginPage = () => {
       return;
     }
     dispatch(getUserProfile());
+    toast.success(`Welcome ${data.user?.user_metadata.first_name}`)
     navigate("/");
-    // const
-    console.log("login", data);
-    console.log("login", data);
+
   };
   return (
     <div className="container mx-auto">

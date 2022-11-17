@@ -12,18 +12,7 @@ const Layout = (props: Props) => {
       <Navbar />
       <main className="container mx-auto ">{props.children}</main>
       {/* <footer>Footer</footer> */}
-      <ToastContainer
-        position="bottom-left"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+     
     </>
   );
 };

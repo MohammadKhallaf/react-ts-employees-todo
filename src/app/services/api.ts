@@ -21,6 +21,7 @@ export const useRegister = () => {
         },
       },
     });
+    
     return { data, error };
   };
 };
