@@ -7,14 +7,16 @@ type Props = {
   children: React.ReactNode;
 };
 
-const AuthRoutes = (props: Props) => {
+const AdminRoutes = (props: Props) => {
   const user_id = useAppSelector((state) => state.user.id);
-  if (!user_id) {
-    toast.error("You are not logged in!");
-    return <Navigate to="/login" />;
+  const is_admin = useAppSelector((state) => state.user.is_admin);
+  console.log(is_admin);
+  if (!user_id || !is_admin) {
+    toast.warn("You don't have admin rights");
+    return <Navigate to="/" />;
   } else {
     return <>{props.children}</>;
   }
 };
 
-export default AuthRoutes;
+export default AdminRoutes;
