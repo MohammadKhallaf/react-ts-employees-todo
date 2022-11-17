@@ -2,14 +2,6 @@ import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { supabase } from "../services/api";
 export interface Group {}
-export interface User {
-  id: string | number | null;
-  first_name: string | null;
-  last_name: string | null;
-  is_admin: boolean;
-  group: number | null;
-  users: User[];
-}
 
 const initialState: User = {
   id: null,

@@ -9,12 +9,13 @@ type Props = {
 
 const AuthRoutes = (props: Props) => {
   const user_id = useAppSelector((state) => state.user.id);
-  if (!user_id) {
-    toast.error("You are not logged in!");
-    return <Navigate to="/login" />;
-  } else {
+  // if (!user_id) {
+  //   toast.error("You are not logged in!");
+  //   return <Navigate to="/login" />;
+  // } else {
+  //   return <>{props.children}</>;
     return <>{props.children}</>;
-  }
+  // }
 };
 
 export default AuthRoutes;

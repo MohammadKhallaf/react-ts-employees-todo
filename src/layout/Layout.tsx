@@ -10,7 +10,7 @@ const Layout = (props: Props) => {
   return (
     <>
       <Navbar />
-      <main className="container mx-auto">{props.children}</main>
+      <main className="container mx-auto ">{props.children}</main>
       {/* <footer>Footer</footer> */}
       <ToastContainer
         position="bottom-left"

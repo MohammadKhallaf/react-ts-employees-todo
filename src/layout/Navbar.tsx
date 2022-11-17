@@ -4,12 +4,11 @@ import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../app/store";
 import LogButton from "../components/LogButton";
 
-
 const Navbar = () => {
   const user_id = useAppSelector((state) => state.user.id);
   const user_exist = !!user_id;
   return (
-    <header className="text-gray-600 body-font">
+    <header className="bg-slate-200 body-font  shadow-sm text-gray-600 w-full z-10">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <Link
           to="/"

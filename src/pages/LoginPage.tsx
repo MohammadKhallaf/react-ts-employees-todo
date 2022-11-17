@@ -4,8 +4,6 @@ import { getUserProfile } from "../app/features/userSlice";
 import { supabase } from "../app/services/api";
 import { useAppDispatch } from "../app/store";
 
-
-
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -32,7 +30,7 @@ const LoginPage = () => {
     console.log("login", data);
   };
   return (
-    <div className="container mx-auto ">
+    <div className="container mx-auto">
       <div className="p-8 lg:w-1/2 mx-auto">
         <div className=" rounded-b-lg py-12 px-4 lg:px-24  bg-slate-200">
           <h3 className="text-center text-3xl font-semibold text-gray-900">

@@ -1,10 +1,4 @@
-import React, { useState } from "react";
-import {
-  deleteTask,
-  Task,
-  updateTask,
-  updateTaskState,
-} from "../app/features/tasksSlice";
+import { useState } from "react";
 import {
   Pencil2Icon,
   TrashIcon,
@@ -12,7 +6,12 @@ import {
   CheckboxIcon,
   BoxIcon,
 } from "@radix-ui/react-icons";
-import { useAppDispatch, useAppSelector } from "../app/store";
+import { useAppDispatch, useAppSelector } from "../../app/store";
+import {
+  updateTaskStateThunk,
+  updateTaskThunk,
+} from "../../app/features/task/update";
+import { deleteTaskThunk } from "../../app/features/task/delete";
 type Props = {
   task: Task;
 };
@@ -24,11 +23,11 @@ const TaskRow = ({ task }: Props) => {
   const dispatch = useAppDispatch();
   const taskUser = users.find((user) => user.id === task.user_id);
   const updateTaskHandler = () => {
-    dispatch(updateTask({ task_id: task.id, content }));
+    dispatch(updateTaskThunk({ task_id: task.id, content }));
     setEdit(false);
   };
   const deleteTaskHandler = () => {
-    dispatch(deleteTask(task.id));
+    dispatch(deleteTaskThunk(task.id));
     setEdit(false);
   };
   return (
@@ -46,7 +45,9 @@ const TaskRow = ({ task }: Props) => {
             height="1.8rem"
             className="px-0.5 hover:cursor-pointer hover:text-cyan-700"
             onClick={() =>
-              dispatch(updateTaskState({ task_id: task.id, is_complete: true }))
+              dispatch(
+                updateTaskStateThunk({ task_id: task.id, is_complete: true })
+              )
             }
           />
         )}
@@ -67,24 +68,25 @@ const TaskRow = ({ task }: Props) => {
           className="app-input-text w-[85%] w-sm-full disabled:border-none disabled:bg-transparent"
         />
       </td>
-      <td className="text-center min-w-[3rem] hover:text-green-800">
+      <td className="text-center min-w-[3rem] ">
         {!edit && (
           <Pencil2Icon
-            width="1.8rem"
-            height="1.8rem"
+            className="icon hover:text-green-800"
             onClick={() => setEdit(true)}
           />
         )}
         {edit && (
           <CheckIcon
-            width="1.8rem"
-            height="1.8rem"
+            className="icon hover:text-green-800"
             onClick={updateTaskHandler}
           />
         )}
       </td>
-      <td className="text-center min-w-[3rem] hover:text-red-900">
-        <TrashIcon width="1.8rem" height="1.8rem" onClick={deleteTaskHandler} />
+      <td className="text-center min-w-[3rem] ">
+        <TrashIcon
+          className="icon hover:text-red-900"
+          onClick={deleteTaskHandler}
+        />
       </td>
     </tr>
   );

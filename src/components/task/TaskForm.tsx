@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
-import { insertTask } from "../app/features/tasksSlice";
-import { useAppDispatch, useAppSelector } from "../app/store";
+import { insertTaskThunk } from "../../app/features/task/insert";
+import { useAppDispatch, useAppSelector } from "../../app/store";
 
 type Props = {};
 
@@ -15,7 +15,7 @@ const TaskForm = (props: Props) => {
   const dispatch = useAppDispatch();
 
   const addTaskHandler = () => {
-    if (user) dispatch(insertTask({ content: task, user_id: user }));
+    if (user) dispatch(insertTaskThunk({ content: task, user_id: user }));
   };
   const userSelectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value);

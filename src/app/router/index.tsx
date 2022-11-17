@@ -2,6 +2,7 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import App from "../../App";
 import AuthRoutes from "../../components/routers/AuthRoutes";
 import Layout from "../../layout/Layout";
+import GroupsPage from "../../pages/GroupsPage";
 import HomePage from "../../pages/HomePage";
 import LoginPage from "../../pages/LoginPage";
 import RegisterPage from "../../pages/RegisterPage";
@@ -44,13 +45,26 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "login",
-        element: <LoginPage />,
-      },
-      {
-        path: "register",
-        element: <RegisterPage />,
+        path: "groups",
+
+        element: (
+          <AuthRoutes>
+            <GroupsPage />
+          </AuthRoutes>
+        ),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: (
+      <AuthRoutes>
+        <LoginPage />
+      </AuthRoutes>
+    ),
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
 ]);
