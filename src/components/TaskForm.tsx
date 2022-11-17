@@ -5,15 +5,17 @@ import { useAppDispatch, useAppSelector } from "../app/store";
 type Props = {};
 
 const TaskForm = (props: Props) => {
-  const [user, setUser] = useState<string>("0");
+  const users = useAppSelector((state) => state.user.users);
+  const userInst = useAppSelector((state) => state.user);
+  const userInsID = userInst.id;
+  const [user, setUser] = useState<string | number | null>(userInsID);
   const [task, setTask] = useState<string>("");
   const [valid, setValid] = useState(false);
 
-  const users = useAppSelector((state) => state.user.users);
   const dispatch = useAppDispatch();
 
   const addTaskHandler = () => {
-    dispatch(insertTask(task));
+    if (user) dispatch(insertTask({ content: task, user_id: user }));
   };
   const userSelectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value);
@@ -34,25 +36,27 @@ const TaskForm = (props: Props) => {
   return (
     <form onSubmit={ceateTaskHandler}>
       <div className="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
-        <div className="relative flex-grow w-full">
-          <label htmlFor="user" className="leading-7 text-sm text-gray-600">
-            User
-          </label>
-          <select
-            name="user"
-            id="user"
-            value={user}
-            onChange={userSelectHandler}
-            className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out h-12"
-          >
-            {users.length &&
-              users.map((user) => (
-                <option key={user.id} value={user.id || ""}>
-                  {user.first_name} {user.last_name}
-                </option>
-              ))}
-          </select>
-        </div>
+        {userInst.is_admin && (
+          <div className="relative flex-grow w-full">
+            <label htmlFor="user" className="leading-7 text-sm text-gray-600">
+              User
+            </label>
+            <select
+              name="user"
+              id="user"
+              value={user ? user : "null"}
+              onChange={userSelectHandler}
+              className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out h-12"
+            >
+              {users.length &&
+                users.map((user) => (
+                  <option key={user.id} value={user.id || ""}>
+                    {user.first_name} {user.last_name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        )}
         <div className="relative flex-grow w-full">
           <label htmlFor="task" className="leading-7 text-sm text-gray-600">
             Task

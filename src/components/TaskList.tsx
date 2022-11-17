@@ -1,3 +1,4 @@
+import { CheckboxIcon } from "@radix-ui/react-icons";
 import React, { useEffect } from "react";
 import { fetchAllTasks } from "../app/features/tasksSlice";
 import { useAppDispatch, useAppSelector } from "../app/store";
@@ -16,6 +17,11 @@ const TaskList = (props: Props) => {
     <table className="w-full mt-5 ">
       <thead className="uppercase">
         <tr>
+          <th className="w-28">
+            <CheckboxIcon
+            width="1.8rem"
+            height="1.8rem"
+          /></th>
           <th className="w-28">id</th>
           {/* if the user is admin */}
           <th className="min-w-[10rem]">user name</th>

@@ -1,6 +1,17 @@
 import React, { useState } from "react";
-import { deleteTask, Task, updateTask } from "../app/features/tasksSlice";
-import { Pencil2Icon, TrashIcon, CheckIcon } from "@radix-ui/react-icons";
+import {
+  deleteTask,
+  Task,
+  updateTask,
+  updateTaskState,
+} from "../app/features/tasksSlice";
+import {
+  Pencil2Icon,
+  TrashIcon,
+  CheckIcon,
+  CheckboxIcon,
+  BoxIcon,
+} from "@radix-ui/react-icons";
 import { useAppDispatch, useAppSelector } from "../app/store";
 type Props = {
   task: Task;
@@ -22,6 +33,24 @@ const TaskRow = ({ task }: Props) => {
   };
   return (
     <tr>
+      <td className="text-center">
+        {(task.is_complete && (
+          <CheckboxIcon
+            width="1.8rem"
+            height="1.8rem"
+            className=" text-cyan-700"
+          />
+        )) || (
+          <BoxIcon
+            width="1.8rem"
+            height="1.8rem"
+            className="px-0.5 hover:cursor-pointer hover:text-cyan-700"
+            onClick={() =>
+              dispatch(updateTaskState({ task_id: task.id, is_complete: true }))
+            }
+          />
+        )}
+      </td>
       <td className="text-center">{task.id}</td>
 
       <td className="text-center">
