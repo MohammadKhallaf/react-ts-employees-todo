@@ -6,7 +6,7 @@ import UserRow from "./UserRow";
 
 type Props = {};
 
-const TaskList = (props: Props) => {
+const UserList = (props: Props) => {
   const dispatch = useAppDispatch();
   const users = useAppSelector((state) => state.user.users);
   useEffect(() => {
@@ -42,4 +42,4 @@ const TaskList = (props: Props) => {
   );
 };
 
-export default TaskList;
+export default UserList;

@@ -1,3 +1,4 @@
+import * as Tooltip from "@radix-ui/react-tooltip";
 import React, { useState } from "react";
 import {
   Pencil2Icon,
@@ -8,18 +9,17 @@ import {
   BackpackIcon,
 } from "@radix-ui/react-icons";
 import { useAppDispatch, useAppSelector } from "../../app/store";
-import withTooltip from "../RadixTooltip";
+import withTooltip from "../Radix/RadixTooltip";
+import RadixTooltip from "../Radix/RadixTooltip";
 
 type Props = {
   user: User;
 };
 
-const TaskRow = ({ user }: Props) => {
+const UserRow = ({ user }: Props) => {
   const users = useAppSelector((state) => state.user.users);
   const taskUser = users.find((userInst) => userInst.id === user.id);
-  const TodoList = withTooltip(
-    <TrashIcon className="icon hover:text-red-700" text="Hover" />
-  );
+
   return (
     <tr>
       {/* <td className="text-center">{user.id}</td> */}
@@ -36,11 +36,12 @@ const TaskRow = ({ user }: Props) => {
       </td>
 
       <td className="text-center min-w-[3rem] ">
-        with
-        <TrashIcon className="icon hover:text-red-700" />
+        <RadixTooltip tip="Remove user">
+          <TrashIcon className="icon hover:text-red-700" />
+        </RadixTooltip>
       </td>
     </tr>
   );
 };
 
-export default TaskRow;
+export default UserRow;

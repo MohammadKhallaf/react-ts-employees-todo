@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { supabase } from "../services/api";
-export interface Group {}
 
 const initialState: User = {
   id: null,
@@ -11,6 +10,7 @@ const initialState: User = {
   is_admin: false,
   users: [],
 };
+
 
 // Read All Tasks
 export const getUserProfile = createAsyncThunk(

@@ -1,46 +1,115 @@
 import React, { FormEvent, useState } from "react";
+import { toast } from "react-toastify";
+import { useRegister } from "../../app/services/api";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 
 type Props = {};
 
 const UserForm = (props: Props) => {
   const [valid, setValid] = useState(false);
-
+  const register = useRegister();
   const dispatch = useAppDispatch();
 
-  const taskDetailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value) {
-      setValid(true);
-    } else {
-      setValid(false);
+  const inviteUserHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    const target = e.target as typeof e.target & {
+      email: { value: string };
+      password: { value: string };
+      first_name: { value: string };
+      last_name: { value: string };
+    };
+
+    const email = target.email.value;
+    const password = target.password.value;
+    const first_name = target.first_name.value;
+    const last_name = target.last_name.value;
+
+    const { data, error } = await register(
+      email,
+      password,
+      first_name,
+      last_name
+    );
+    if (data.user) {
+      toast.info("done");
     }
   };
-  const ceateTaskHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
   return (
-    <form onSubmit={ceateTaskHandler}>
-      <div className="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+    <form
+      className="flex lg:w-2/3 w-full flex-col mx-auto gap-3 border-2 p-8 rounded-xl shadow"
+      onSubmit={inviteUserHandler}
+    >
+      <h1 className="text-3xl font-bold text-center">Add new user</h1>
+      <div className="flex flex-col md:flex-row gap-3">
         <div className="relative flex-grow w-full">
-          <label htmlFor="task" className="leading-7 text-sm text-gray-600">
-            Task
+          <label
+            htmlFor="first_name"
+            className="leading-7 text-sm text-gray-600"
+          >
+            First name
           </label>
           <input
             type="text"
-            id="task"
-            name="task"
-            className="w-full h-12 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            id="first_name"
+            name="first_name"
+            autoComplete="first_name"
+            className="app-input-text"
+            required
           />
         </div>
-
-        <button
-          className="h-12 text-white bg-indigo-500 whitespace-nowrap border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg disabled:bg-slate-300"
-          disabled={!valid}
-          type="submit"
-        >
-          Add Task
-        </button>
+        <div className="relative flex-grow w-full">
+          <label
+            htmlFor="last_name"
+            className="leading-7 text-sm text-gray-600"
+          >
+            Last Name
+          </label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            className="app-input-text "
+            required
+          />
+        </div>
       </div>
+
+      <div className="flex flex-col md:flex-row gap-3">
+        <div className="relative flex-grow w-full">
+          <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autoComplete="email"
+            className="app-input-text "
+            required
+          />
+        </div>
+        <div className="relative flex-grow w-full">
+          <label htmlFor="password" className="leading-7 text-sm text-gray-600">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autoComplete="password"
+            className="app-input-text "
+            required
+          />
+        </div>
+      </div>
+
+      <button
+        className="text-white bg-indigo-500 whitespace-nowrap border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-5 self-end"
+        // onClick={inviteUserHandler}
+      >
+        Invite User
+      </button>
     </form>
   );
 };

@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@radix-ui/colors': ^0.1.8
   '@radix-ui/react-icons': ^1.1.1
   '@radix-ui/react-tooltip': ^1.0.2
   '@reduxjs/toolkit': ^1.9.0
@@ -21,6 +22,7 @@ specifiers:
   vite: ^3.2.3
 
 dependencies:
+  '@radix-ui/colors': 0.1.8
   '@radix-ui/react-icons': 1.1.1_react@18.2.0
   '@radix-ui/react-tooltip': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@reduxjs/toolkit': 1.9.0_k4ae6lp43ej6mezo3ztvx6pykq
@@ -418,6 +420,10 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
     dev: true
+
+  /@radix-ui/colors/0.1.8:
+    resolution: {integrity: sha512-jwRMXYwC0hUo0mv6wGpuw254Pd9p/R6Td5xsRpOmaWkUHlooNWqVcadgyzlRumMq3xfOTXwJReU0Jv+EIy4Jbw==}
+    dev: false
 
   /@radix-ui/primitive/1.0.0:
     resolution: {integrity: sha512-3e7rn8FDMin4CgeL7Z/49smCA3rFYY3Ha2rUQ7HRWFadS5iCRw08ZgVT1LaNTCNqgvrUiyczLflrVrF0SRQtNA==}
