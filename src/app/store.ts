@@ -4,12 +4,14 @@ import type { TypedUseSelectorHook } from "react-redux";
 import tasksReducer from "./features/tasksSlice";
 import userReducer from "./features/userSlice";
 import notifsReducer from "./features/notificationSlice";
+import groupReducer from "./features/groupSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     tasks: tasksReducer,
     notifs: notifsReducer,
+    groups: groupReducer,
   },
 });
 

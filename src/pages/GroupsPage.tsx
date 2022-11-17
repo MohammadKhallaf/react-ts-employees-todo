@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAllGroups } from "../app/features/groupSlice";
+import { useAppDispatch } from "../app/store";
 
 type Props = {};
 
 const GroupPage = (props: Props) => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getAllGroups());
+  }, []);
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto flex flex-col">
