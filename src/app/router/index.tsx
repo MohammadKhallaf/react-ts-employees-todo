@@ -1,6 +1,8 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import App from "../../App";
+import AuthRoutes from "../../components/routers/AuthRoutes";
 import Layout from "../../layout/Layout";
+import HomePage from "../../pages/HomePage";
 import LoginPage from "../../pages/LoginPage";
 import RegisterPage from "../../pages/RegisterPage";
 import TasksPage from "../../pages/TasksPage";
@@ -12,6 +14,10 @@ export const router = createBrowserRouter([
     path: "/",
 
     element: <App />,
+    loader: async () => {
+      const { data: user } = await supabase.auth.getUser();
+      return user;
+    },
     errorElement: (
       <Layout>
         <div>Error 404</div>
@@ -20,12 +26,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <div>Home</div>,
-      },
-
-      {
-        path: "register",
-        element: <RegisterPage />,
+        element: <HomePage />,
       },
 
       {
@@ -36,16 +37,20 @@ export const router = createBrowserRouter([
       {
         path: "tasks",
 
-        element: <TasksPage />,
+        element: (
+          <AuthRoutes>
+            <TasksPage />
+          </AuthRoutes>
+        ),
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
       },
     ],
-  },
-  {
-    path: "login",
-    element: (
-      <Layout>
-        <LoginPage />
-      </Layout>
-    ),
   },
 ]);

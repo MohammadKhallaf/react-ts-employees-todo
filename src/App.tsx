@@ -1,16 +1,31 @@
 import { useEffect } from "react";
-import { Navigate, Outlet, redirect } from "react-router-dom";
-import { getUserProfile } from "./app/features/userSlice";
-import { useAppDispatch, useAppSelector } from "./app/store";
+import {
+  Outlet,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
+import { getUserProfile, User } from "./app/features/userSlice";
+import { useAppDispatch } from "./app/store";
 import Layout from "./layout/Layout";
 
+
 function App() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
+  const logged_user = useLoaderData() as { user: User };
+
   useEffect(() => {
+    if (!logged_user.user?.id) {
+      navigate("/login");
+    }
     dispatch(getUserProfile());
+   
   }, []);
-  return <Layout>{(user.id && <Outlet />) || <Navigate to="/login" />}</Layout>;
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
 }
 
 export default App;
