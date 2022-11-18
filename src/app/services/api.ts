@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { toast } from "react-toastify";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_KEY;
@@ -21,7 +22,9 @@ export const useRegister = () => {
         },
       },
     });
-
+    if (error) {
+      toast.error("Something went wrong");
+    }
     return { data, error };
   };
 };

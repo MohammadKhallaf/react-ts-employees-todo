@@ -9,6 +9,9 @@ export const getAllUsers = createAsyncThunk("user/list", async () => {
 export const getUserProfile = createAsyncThunk(
   "user/profile",
   async (_, thunkAPI) => {
+    // const userInStore = thunkAPI.getState().user.id;
+    // console.log(userInStore);
+    // if (userInStore) return;
     const {
       data: { session },
     } = await supabase.auth.getSession();

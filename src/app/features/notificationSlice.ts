@@ -40,7 +40,6 @@ export const subscribeToNotifications = createAsyncThunk(
         { event: "INSERT", schema: "public", table: "notifications" },
         (payload) => {
           thunkAPI.dispatch(getAllNotifs());
-          console.log("Change received!", payload);
         }
       )
       .subscribe();
