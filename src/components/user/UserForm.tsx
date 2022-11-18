@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useRegister } from "../../app/services/api";
 
 const UserForm = () => {
   const register = useRegister();
+  const [valid, setValid] = useState(false);
 
   const inviteUserHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -93,6 +94,7 @@ const UserForm = () => {
             type="password"
             id="password"
             name="password"
+            minLength={6}
             autoComplete="password"
             className="app-input-text "
             required
@@ -101,8 +103,9 @@ const UserForm = () => {
       </div>
 
       <button
-        className="mt-5 self-end whitespace-nowrap rounded border-0 bg-indigo-500 py-2 px-8 text-lg text-white hover:bg-indigo-600 focus:outline-none"
+        className="mt-5 self-end whitespace-nowrap rounded border-0 bg-indigo-500 py-2 px-8 text-lg text-white hover:bg-indigo-600 focus:outline-none disabled:bg-slate-300"
         type="submit"
+        // disabled={!valid}
       >
         Invite User
       </button>

@@ -18,4 +18,4 @@ const AdminRoutes = (props: Props) => {
   }
 };
 
-export default AdminRoutes;
+// export default AdminRoutes;

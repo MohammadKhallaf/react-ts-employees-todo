@@ -7,12 +7,12 @@ import {
   TasksPage,
   UsersPage,
 } from "~/pages";
+import ErrorPage from "~/pages/ErrorPage";
 import App from "../../App";
 import AuthRoutes from "../../components/routers/AuthRoutes";
 import Layout from "../../layout/Layout";
 
 import { getUserProfile } from "../features/user/read";
-import { supabase } from "../services/api";
 import { store } from "../store";
 
 export const router = createBrowserRouter([
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     loader: async () => await store.dispatch(getUserProfile()),
     errorElement: (
       <Layout>
-        <div>Error 404</div>
+        <ErrorPage />
       </Layout>
     ),
     children: [
@@ -69,10 +69,6 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
-    loader: async () => {
-      console.log("first");
-      const { data: user } = await supabase.auth.getUser();
-      return user;
-    },
+    loader: async () => await store.dispatch(getUserProfile()),
   },
 ]);

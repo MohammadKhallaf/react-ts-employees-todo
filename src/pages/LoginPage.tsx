@@ -3,18 +3,17 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getUserProfile } from "~/app/features/user/read";
 import { supabase } from "../app/services/api";
-import { useAppDispatch } from "../app/store";
+import { useAppDispatch, useAppSelector } from "../app/store";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const logged_user = useLoaderData() as { user: User };
-  console.log(logged_user);
+  const user_id = useAppSelector((state) => state.user.id);
   useEffect(() => {
-    if (logged_user.user) {
+    if (user_id) {
       navigate("/");
     }
+    document.getElementById("loader")?.remove();
   }, []);
   const loginHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -37,9 +36,9 @@ const LoginPage = () => {
     navigate("/");
   };
   return (
-    <div className="container mx-auto">
-      <div className="mx-auto p-8 lg:w-1/2">
-        <div className=" rounded-b-lg bg-slate-200 py-12 px-4  lg:px-24">
+    <div className="container mx-auto grid h-screen items-center">
+      <div className="mx-auto w-2/3 p-5 lg:w-1/2">
+        <div className="mx-auto max-w-lg rounded-b-lg bg-slate-200  py-12 px-4 lg:px-24">
           <h3 className="text-center text-3xl font-semibold text-gray-900">
             Login
           </h3>
@@ -84,15 +83,7 @@ const LoginPage = () => {
                 </svg>
               </div>
             </div>
-            <div className="mt-4 flex items-center text-gray-500">
-              <input
-                type="checkbox"
-                id="remember"
-                name="remember"
-                className="mr-3"
-              />
-              <label htmlFor="remember">Remember me</label>
-            </div>
+
             <div className="mt-8 flex items-center justify-center gap-3">
               <button
                 className="transform rounded bg-indigo-500 py-2 px-4 font-medium uppercase text-white shadow transition hover:-translate-y-0.5 hover:bg-indigo-600 hover:shadow-lg"
