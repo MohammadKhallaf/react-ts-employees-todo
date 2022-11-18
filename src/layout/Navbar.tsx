@@ -38,20 +38,24 @@ const Navbar = () => {
           <NavLink to="/tasks" className="nav-item">
             Tasks
           </NavLink>
-          <NavLink to="/users" className="nav-item">
-            Users
-          </NavLink>
-          <NavLink to="/groups" className="nav-item">
-            Groups
-          </NavLink>
-          <NavLink to="/notifications" className="nav-item relative">
-            Notifications
-            {notifications.length ? (
-              <span className="absolute -top-1 -right-4 inline-block whitespace-nowrap rounded-full bg-blue-600 py-1 px-1.5 text-center align-baseline text-xs font-bold leading-none text-white">
-                {notifications.length}
-              </span>
-            ) : null}
-          </NavLink>
+          {user.is_admin ? (
+            <>
+              <NavLink to="/users" className="nav-item">
+                Users
+              </NavLink>
+              <NavLink to="/groups" className="nav-item">
+                Groups
+              </NavLink>
+              <NavLink to="/notifications" className="nav-item relative">
+                Notifications
+                {notifications.length ? (
+                  <span className="absolute -top-1 -right-4 inline-block whitespace-nowrap rounded-full bg-blue-600 py-1 px-1.5 text-center align-baseline text-xs font-bold leading-none text-white">
+                    {notifications.length}
+                  </span>
+                ) : null}
+              </NavLink>
+            </>
+          ) : null}
         </nav>
 
         <LogButton user_exist={user_exist} />
