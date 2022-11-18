@@ -28,7 +28,7 @@ const LogButton = ({ user_exist }: { user_exist: boolean }) => {
   }
   return (
     <Link
-      to="login"
+      to="/login"
       className="mt-4 inline-flex items-center rounded border-0 bg-gray-100 py-1 px-3 text-base hover:bg-gray-200 focus:outline-none md:mt-0"
     >
       Login
