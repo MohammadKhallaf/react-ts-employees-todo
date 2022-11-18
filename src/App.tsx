@@ -1,15 +1,12 @@
-import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
-import { getUserProfile } from "./app/features/userSlice";
+import { useEffect, useState } from "react";
+import { Outlet, useLoaderData } from "react-router-dom";
+import { subscribeToNotifications } from "./app/features/notificationSlice";
+import { getUserProfile } from "./app/features/user/read";
+import { supabase } from "./app/services/api";
 import { useAppDispatch } from "./app/store";
 import Layout from "./layout/Layout";
 
 function App() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getUserProfile());
-  }, []);
   return (
     <Layout>
       <Outlet />

@@ -1,25 +1,25 @@
-import { createBrowserRouter, redirect } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import {
+  GroupsPage,
+  HomePage,
+  LoginPage,
+  NotificationPage,
+  TasksPage,
+  UsersPage,
+} from "~/pages";
 import App from "../../App";
-import AdminRoutes from "../../components/routers/AdminRoutes";
 import AuthRoutes from "../../components/routers/AuthRoutes";
 import Layout from "../../layout/Layout";
-import GroupsPage from "../../pages/GroupsPage";
-import HomePage from "../../pages/HomePage";
-import LoginPage from "../../pages/LoginPage";
-import NotificationPage from "../../pages/NotificationPage";
-import TasksPage from "../../pages/TasksPage";
-import UsersPage from "../../pages/UsersPage";
+
+import { getUserProfile } from "../features/user/read";
 import { supabase } from "../services/api";
+import { store } from "../store";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-
     element: <App />,
-    loader: async () => {
-      const { data: user } = await supabase.auth.getUser();
-      return user;
-    },
+    loader: async () => await store.dispatch(getUserProfile()),
     errorElement: (
       <Layout>
         <div>Error 404</div>
@@ -34,40 +34,33 @@ export const router = createBrowserRouter([
       {
         path: "users",
         element: (
-          <AuthRoutes>
-            <AdminRoutes>
-              <UsersPage />
-            </AdminRoutes>
+          <AuthRoutes role="user">
+            <UsersPage />
           </AuthRoutes>
         ),
       },
       {
         path: "tasks",
         element: (
-          <AuthRoutes>
+          <AuthRoutes role="user">
             <TasksPage />
           </AuthRoutes>
         ),
       },
+
       {
         path: "groups",
-
         element: (
-          <AuthRoutes>
-            <AdminRoutes>
-              <GroupsPage />
-            </AdminRoutes>
+          <AuthRoutes role="user">
+            <GroupsPage />
           </AuthRoutes>
         ),
       },
       {
         path: "notifications",
-
         element: (
-          <AuthRoutes>
-            <AdminRoutes>
-              <NotificationPage />
-            </AdminRoutes>
+          <AuthRoutes role="admin">
+            <NotificationPage />
           </AuthRoutes>
         ),
       },
@@ -77,7 +70,7 @@ export const router = createBrowserRouter([
     path: "/login",
     element: <LoginPage />,
     loader: async () => {
-      console.log("router login");
+      console.log("first");
       const { data: user } = await supabase.auth.getUser();
       return user;
     },

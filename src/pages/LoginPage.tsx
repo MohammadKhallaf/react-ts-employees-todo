@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getUserProfile } from "../app/features/userSlice";
+import { getUserProfile } from "~/app/features/user/read";
 import { supabase } from "../app/services/api";
 import { useAppDispatch } from "../app/store";
 
@@ -10,6 +10,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const logged_user = useLoaderData() as { user: User };
+  console.log(logged_user);
   useEffect(() => {
     if (logged_user.user) {
       navigate("/");
@@ -24,7 +25,7 @@ const LoginPage = () => {
     const email = target.email.value;
     const password = target.password.value;
 
-    let { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -32,30 +33,29 @@ const LoginPage = () => {
       return;
     }
     dispatch(getUserProfile());
-    toast.success(`Welcome ${data.user?.user_metadata.first_name}`)
+    toast.success(`Welcome ${data.user?.user_metadata.first_name}`);
     navigate("/");
-
   };
   return (
     <div className="container mx-auto">
-      <div className="p-8 lg:w-1/2 mx-auto">
-        <div className=" rounded-b-lg py-12 px-4 lg:px-24  bg-slate-200">
+      <div className="mx-auto p-8 lg:w-1/2">
+        <div className=" rounded-b-lg bg-slate-200 py-12 px-4  lg:px-24">
           <h3 className="text-center text-3xl font-semibold text-gray-900">
             Login
           </h3>
           <form className="mt-6" onSubmit={loginHandler}>
             <div className="relative">
               <input
-                className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded-md border border-gray-100 py-3  pl-12  leading-tight text-gray-600 shadow-sm transition focus:placeholder-gray-600 focus:shadow-md focus:outline-none focus:ring-gray-600"
                 id="email"
                 type="email"
                 placeholder="Email"
                 required={true}
               />
-              <div className="absolute left-0 inset-y-0 flex items-center">
+              <div className="absolute inset-y-0 left-0 flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-7 w-7 ml-3 text-gray-400 p-1"
+                  className="ml-3 h-7 w-7 p-1 text-gray-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -66,17 +66,17 @@ const LoginPage = () => {
             </div>
             <div className="relative mt-3">
               <input
-                className="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600  transition  rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded-md border border-gray-100 py-3  pl-12  leading-tight text-gray-600 shadow-sm transition focus:placeholder-gray-600 focus:shadow-md focus:outline-none focus:ring-gray-600"
                 id="password"
                 type="password"
                 placeholder="Password"
                 required={true}
                 autoComplete="password"
               />
-              <div className="absolute left-0 inset-y-0 flex items-center">
+              <div className="absolute inset-y-0 left-0 flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-7 w-7 ml-3 text-gray-400 p-1"
+                  className="ml-3 h-7 w-7 p-1 text-gray-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -93,16 +93,16 @@ const LoginPage = () => {
               />
               <label htmlFor="remember">Remember me</label>
             </div>
-            <div className="flex items-center justify-center mt-8 gap-3">
+            <div className="mt-8 flex items-center justify-center gap-3">
               <button
-                className="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                className="transform rounded bg-indigo-500 py-2 px-4 font-medium uppercase text-white shadow transition hover:-translate-y-0.5 hover:bg-indigo-600 hover:shadow-lg"
                 type="submit"
               >
                 Sign in
               </button>
               <Link to="/register" className="flex items-center justify-center">
                 <button
-                  className="text-white py-2 px-4 uppercase rounded bg-cyan-500 hover:bg-cyan-700 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                  className="transform rounded bg-cyan-500 py-2 px-4 font-medium uppercase text-white shadow transition hover:-translate-y-0.5 hover:bg-cyan-700 hover:shadow-lg"
                   type="button"
                 >
                   Register

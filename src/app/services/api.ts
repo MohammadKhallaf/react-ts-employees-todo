@@ -11,7 +11,7 @@ export const useRegister = () => {
     first_name: string,
     last_name: string
   ) => {
-    let { data, error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -21,20 +21,7 @@ export const useRegister = () => {
         },
       },
     });
-    
+
     return { data, error };
   };
 };
-
-// let { error } = await supabase.auth.signOut();
-// console.log(data);
-// const { data: user } = await supabase
-//   .from("profiles")
-//   .select("*")
-//   .eq("id", supabase.auth.admin)
-//   .limit(1)
-//   .single();
-
-// console.log(user.user?.id);
-// console.log(profile);
-// if (user.role === admin) { ... }

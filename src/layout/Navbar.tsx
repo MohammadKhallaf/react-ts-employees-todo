@@ -6,6 +6,7 @@ import { PersonIcon } from "@radix-ui/react-icons";
 
 const Navbar = () => {
   const user = useAppSelector((state) => state.user);
+  const notifications = useAppSelector((state) => state.notifs.list);
   const user_id = user.id;
   const user_exist = !!user_id;
   return (
@@ -43,8 +44,13 @@ const Navbar = () => {
           <NavLink to="/groups" className="nav-item">
             Groups
           </NavLink>
-          <NavLink to="/notifications" className="nav-item">
+          <NavLink to="/notifications" className="nav-item relative">
             Notifications
+            {notifications.length ? (
+              <span className="absolute -top-1 -right-4 inline-block whitespace-nowrap rounded-full bg-blue-600 py-1 px-1.5 text-center align-baseline text-xs font-bold leading-none text-white">
+                {notifications.length}
+              </span>
+            ) : null}
           </NavLink>
         </nav>
 

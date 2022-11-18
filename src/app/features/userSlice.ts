@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { supabase } from "../services/api";
+import { getAllUsers, getUserProfile } from "./user/read";
 
 const initialState: User = {
   id: null,
@@ -11,48 +11,9 @@ const initialState: User = {
   users: [],
 };
 
-// Read All Tasks
-export const getUserProfile = createAsyncThunk(
-  "user/profile",
-  async (_, thunkAPI) => {
-    const { data: user } = await supabase.auth.getUser();
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user.user?.id)
-      .limit(1)
-      .single();
-    if (profile.is_admin) {
-      thunkAPI.dispatch(getAllUsers());
-    }
-    return profile;
-  }
-);
-
-export const updateUserGroup = createAsyncThunk(
-  "user/group_update",
-  async (
-    { user_id, group_id }: { user_id: uuid; group_id: number },
-    thunkAPI
-  ) => {
-    const { data: user, error } = await supabase
-      .from("profiles")
-      .update({ group: group_id })
-      .eq("id", user_id)
-      .select();
-
-    if (user) return user;
-  }
-);
-
-export const getAllUsers = createAsyncThunk("user/list", async () => {
-  const { data: user } = await supabase.auth.getUser();
-  const { data: profiles, error } = await supabase.from("profiles").select("*");
-  return profiles;
-});
-
 export const logOutUser = createAsyncThunk("user/logout", async () => {
   const { error } = await supabase.auth.signOut();
+  location.reload();
   if (!error) return true;
 });
 
@@ -76,8 +37,5 @@ export const userSlice = createSlice({
     });
   },
 });
-
-// // Action creators are generated for each case reducer function
-// export const { addUser } = usersSlice.actions;
 
 export default userSlice.reducer;

@@ -5,18 +5,16 @@ import { useAppDispatch, useAppSelector } from "../../app/store";
 import TaskRow from "../task/TaskRow";
 import NotificationRow from "./NotificationRow";
 
-type Props = {};
-
-const NotificationsList = (props: Props) => {
+const NotificationsList = () => {
   const dispatch = useAppDispatch();
   const tasks = useAppSelector((state) => state.tasks.tasks);
-  const notifications = useAppSelector((state) => state.notifs);
+  const notifications = useAppSelector((state) => state.notifs.list);
   useEffect(() => {
     dispatch(fetchAllTasksThunk());
   }, []);
 
   return (
-    <table className="w-full mt-5 ">
+    <table className="mt-5 w-full ">
       <thead className="uppercase">
         <tr>
           {/* if the user is admin */}

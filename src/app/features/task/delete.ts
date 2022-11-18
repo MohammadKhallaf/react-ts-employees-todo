@@ -4,7 +4,7 @@ import { supabase } from "../../services/api";
 // Delete a Task
 export const deleteTaskThunk = createAsyncThunk(
   "tasks/delete",
-  async (task_id: string | number| uuid) => {
+  async (task_id: string | number | uuid) => {
     const { data, error } = await supabase
       .from("tasks")
       .delete()

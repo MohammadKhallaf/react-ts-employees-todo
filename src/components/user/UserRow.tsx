@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { TrashIcon, BackpackIcon } from "@radix-ui/react-icons";
 import { useAppDispatch, useAppSelector } from "../../app/store";
-import { updateUserGroup } from "../../app/features/userSlice";
 import RadixTooltip from "../Radix/RadixTooltip";
+import { updateUserGroup } from "~/app/features/user/update";
 
 type Props = {
   user: User;
@@ -28,8 +28,6 @@ const UserRow = ({ user }: Props) => {
   };
   return (
     <tr>
-      {/* <td className="text-center">{user.id}</td> */}
-
       <td className="text-center">
         {`${taskUser?.first_name} ${taskUser?.last_name}`}
       </td>

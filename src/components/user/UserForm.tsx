@@ -1,14 +1,9 @@
-import React, { FormEvent, useState } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import { useRegister } from "../../app/services/api";
-import { useAppDispatch, useAppSelector } from "../../app/store";
 
-type Props = {};
-
-const UserForm = (props: Props) => {
-  const [valid, setValid] = useState(false);
+const UserForm = () => {
   const register = useRegister();
-  const dispatch = useAppDispatch();
 
   const inviteUserHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -37,15 +32,15 @@ const UserForm = (props: Props) => {
   };
   return (
     <form
-      className="flex lg:w-2/3 w-full flex-col mx-auto gap-3 border-2 p-8 rounded-xl shadow"
+      className="mx-auto flex w-full flex-col gap-3 rounded-xl border-2 p-8 shadow lg:w-2/3"
       onSubmit={inviteUserHandler}
     >
-      <h1 className="text-3xl font-bold text-center">Add new user</h1>
-      <div className="flex flex-col md:flex-row gap-3">
-        <div className="relative flex-grow w-full">
+      <h1 className="text-center text-3xl font-bold">Add new user</h1>
+      <div className="flex flex-col gap-3 md:flex-row">
+        <div className="relative w-full flex-grow">
           <label
             htmlFor="first_name"
-            className="leading-7 text-sm text-gray-600"
+            className="text-sm leading-7 text-gray-600"
           >
             First name
           </label>
@@ -58,10 +53,10 @@ const UserForm = (props: Props) => {
             required
           />
         </div>
-        <div className="relative flex-grow w-full">
+        <div className="relative w-full flex-grow">
           <label
             htmlFor="last_name"
-            className="leading-7 text-sm text-gray-600"
+            className="text-sm leading-7 text-gray-600"
           >
             Last Name
           </label>
@@ -75,9 +70,9 @@ const UserForm = (props: Props) => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-3">
-        <div className="relative flex-grow w-full">
-          <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+      <div className="flex flex-col gap-3 md:flex-row">
+        <div className="relative w-full flex-grow">
+          <label htmlFor="email" className="text-sm leading-7 text-gray-600">
             Email
           </label>
           <input
@@ -89,8 +84,8 @@ const UserForm = (props: Props) => {
             required
           />
         </div>
-        <div className="relative flex-grow w-full">
-          <label htmlFor="password" className="leading-7 text-sm text-gray-600">
+        <div className="relative w-full flex-grow">
+          <label htmlFor="password" className="text-sm leading-7 text-gray-600">
             Password
           </label>
           <input
@@ -105,8 +100,8 @@ const UserForm = (props: Props) => {
       </div>
 
       <button
-        className="text-white bg-indigo-500 whitespace-nowrap border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-5 self-end"
-        // onClick={inviteUserHandler}
+        className="mt-5 self-end whitespace-nowrap rounded border-0 bg-indigo-500 py-2 px-8 text-lg text-white hover:bg-indigo-600 focus:outline-none"
+        onClick={inviteUserHandler}
       >
         Invite User
       </button>
