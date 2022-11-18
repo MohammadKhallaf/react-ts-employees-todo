@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { getAllGroups } from "~/app/features/group/read";
+import GroupsForm from "~/components/groups/GroupForm";
 import { useAppDispatch } from "../app/store";
 
 const GroupPage = () => {
@@ -13,7 +14,7 @@ const GroupPage = () => {
         <div className="mb-12 flex w-full flex-col text-center">
           <h1 className="page-header title-font">Groups</h1>
         </div>
-        {/* <TaskForm /> */}
+        <GroupsForm />
         <div className="mx-auto lg:w-4/6">{/* <TaskList /> */}</div>
       </div>
     </section>
