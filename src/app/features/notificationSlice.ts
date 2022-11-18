@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 import { supabase } from "../services/api";
+import { getAllNotifs } from "./notifications/read";
 import { deleteTaskThunk } from "./task/delete";
 export interface Notification {
   id: uuid;
@@ -7,22 +9,18 @@ export interface Notification {
   task_id: uuid;
   content: string;
 }
-
-const initialState: Notification[] = [];
-
-export const getAllNotifs = createAsyncThunk("notifs/all",
- async () => {
-  let { data: user_task_notifs, error } = await supabase
-    .from("user_task_notifs")
-    .select("*");
-
-  return user_task_notifs;
-});
+interface NotificationState {
+  list: Notification[];
+  channel: RealtimeChannel | null;
+}
+const initialState: NotificationState = {
+  list: [],
+  channel: null,
+};
 
 export const deleteTaskOnNotifThunk = createAsyncThunk(
   "notifs/del",
   async (task_id: string | number | uuid, thunkAPI) => {
-    console.log(task_id);
     const { data, error } = await supabase
       .from("notifications")
       .delete()
@@ -32,15 +30,39 @@ export const deleteTaskOnNotifThunk = createAsyncThunk(
     thunkAPI.dispatch(getAllNotifs());
   }
 );
-
+export const subscribeToNotifications = createAsyncThunk(
+  "notifs/subscribe",
+  async (_, thunkAPI) => {
+    const notifications = supabase
+      .channel("public:notifications")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "notifications" },
+        (payload) => {
+          thunkAPI.dispatch(getAllNotifs());
+          console.log("Change received!", payload);
+        }
+      )
+      .subscribe();
+    // if (notifications) return notifications;
+  }
+);
 export const notifSlice = createSlice({
   name: "notifs",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllNotifs.fulfilled, (state, { payload }) => {
-      if (payload) return payload;
+      if (payload) state.list = payload;
+      return state;
     });
+    // builder.addCase(
+    //   subscribeToNotifications.fulfilled,
+    //   (state, { payload }) => {
+    //     if (payload) state.channel = payload;
+    //     return state;
+    //   }
+    // );
   },
 });
 
