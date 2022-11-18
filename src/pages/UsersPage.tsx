@@ -16,7 +16,7 @@ const UsersPage = () => {
           <h1 className="page-header title-font">Users List</h1>
         </div>
         <UserForm />
-        <div className="mx-auto lg:w-4/6">
+        <div className="mx-auto max-w-full overflow-x-scroll lg:w-4/6">
           <UserList />
         </div>
       </div>

@@ -18,7 +18,7 @@ const TasksPage = () => {
           <h1 className="page-header title-font">To Do List</h1>
         </div>
         <TaskForm />
-        <div className="mx-auto lg:w-4/6">
+        <div className="mx-auto max-w-full overflow-x-scroll lg:w-4/6">
           {(loading == "pending" && (
             <div className="mt-8 flex items-center justify-center">
               <div
