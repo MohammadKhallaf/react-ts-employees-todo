@@ -14,12 +14,13 @@ const UserList = (props: Props) => {
   }, []);
 
   return (
-    <table className="w-full mt-5 ">
+    <table className="mt-5 w-full ">
       <thead className="uppercase">
         <tr>
           {/* if the user is admin */}
           <th className="min-w-[10rem]">user name</th>
-          <th className="min-w-[20rem]">role</th>
+          <th className="min-w-[7rem]">role</th>
+          <th className="min-w-[20rem]">group</th>
           {/* <th className="w-18">edit</th> */}
         </tr>
       </thead>

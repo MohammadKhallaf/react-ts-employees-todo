@@ -11,7 +11,6 @@ const initialState: User = {
   users: [],
 };
 
-
 // Read All Tasks
 export const getUserProfile = createAsyncThunk(
   "user/profile",
@@ -30,9 +29,25 @@ export const getUserProfile = createAsyncThunk(
   }
 );
 
+export const updateUserGroup = createAsyncThunk(
+  "user/group_update",
+  async (
+    { user_id, group_id }: { user_id: uuid; group_id: number },
+    thunkAPI
+  ) => {
+    const { data: user, error } = await supabase
+      .from("profiles")
+      .update({ group: group_id })
+      .eq("id", user_id)
+      .select();
+
+    if (user) return user;
+  }
+);
+
 export const getAllUsers = createAsyncThunk("user/list", async () => {
   const { data: user } = await supabase.auth.getUser();
-  let { data: profiles, error } = await supabase.from("profiles").select("*");
+  const { data: profiles, error } = await supabase.from("profiles").select("*");
   return profiles;
 });
 
