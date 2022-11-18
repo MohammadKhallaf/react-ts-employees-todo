@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "~/app/services/api";
 
 export const getAllUsers = createAsyncThunk("user/list", async () => {
-  const { data: user } = await supabase.auth.getUser();
   const { data: profiles, error } = await supabase.from("profiles").select("*");
   return profiles;
 });
@@ -10,16 +9,22 @@ export const getAllUsers = createAsyncThunk("user/list", async () => {
 export const getUserProfile = createAsyncThunk(
   "user/profile",
   async (_, thunkAPI) => {
-    const { data: user } = await supabase.auth.getUser();
-    const { data: profile } = await supabase
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session) return;
+    const user = session.user;
+
+    const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("*")
-      .eq("id", user.user?.id)
+      .eq("id", user.id)
       .limit(1)
       .single();
-    if (profile.is_admin) {
+    if (profile?.is_admin) {
       thunkAPI.dispatch(getAllUsers());
     }
+
     return profile;
   }
 );
