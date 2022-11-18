@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { supabase } from "../services/api";
+import { createSlice } from "@reduxjs/toolkit";
+
 import { deleteTaskThunk } from "./task/delete";
 import { insertTaskThunk } from "./task/insert";
 import { fetchAllTasksThunk } from "./task/read";
@@ -20,7 +20,11 @@ export const tasksSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchAllTasksThunk.pending, (state, action) => {
+      state.loading = "pending";
+    });
     builder.addCase(fetchAllTasksThunk.fulfilled, (state, action) => {
+      state.loading = "succeeded";
       if (action.payload?.length) state.tasks = action.payload;
     });
     builder.addCase(insertTaskThunk.fulfilled, (state, { payload }) => {
