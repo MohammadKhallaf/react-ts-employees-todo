@@ -1,10 +1,8 @@
-import React, { FormEvent, useState } from "react";
+import { useState } from "react";
 import { insertTaskThunk } from "../../app/features/task/insert";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 
-type Props = {};
-
-const TaskForm = (props: Props) => {
+const TaskForm = () => {
   const users = useAppSelector((state) => state.user.users);
   const userInst = useAppSelector((state) => state.user);
   const userInsID = userInst.id;
@@ -18,7 +16,6 @@ const TaskForm = (props: Props) => {
     if (user) dispatch(insertTaskThunk({ content: task, user_id: user }));
   };
   const userSelectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
     setUser(e.target.value);
   };
   const taskDetailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,10 +32,10 @@ const TaskForm = (props: Props) => {
   };
   return (
     <form onSubmit={ceateTaskHandler}>
-      <div className="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+      <div className="mx-auto flex w-full flex-col items-end space-y-4 px-8 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-0 lg:w-2/3">
         {userInst.is_admin && (
-          <div className="relative flex-grow w-full">
-            <label htmlFor="user" className="leading-7 text-sm text-gray-600">
+          <div className="relative w-full flex-grow">
+            <label htmlFor="user" className="text-sm leading-7 text-gray-600">
               User
             </label>
             <select
@@ -46,7 +43,7 @@ const TaskForm = (props: Props) => {
               id="user"
               value={user ? user : "null"}
               onChange={userSelectHandler}
-              className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out h-12"
+              className="h-12 w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200"
             >
               {users.length &&
                 users.map((user) => (
@@ -57,8 +54,8 @@ const TaskForm = (props: Props) => {
             </select>
           </div>
         )}
-        <div className="relative flex-grow w-full">
-          <label htmlFor="task" className="leading-7 text-sm text-gray-600">
+        <div className="relative w-full flex-grow">
+          <label htmlFor="task" className="text-sm leading-7 text-gray-600">
             Task
           </label>
           <input
@@ -67,12 +64,12 @@ const TaskForm = (props: Props) => {
             name="task"
             value={task}
             onChange={taskDetailHandler}
-            className="w-full h-12 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            className="h-12 w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 py-1 px-3 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200"
           />
         </div>
 
         <button
-          className="h-12 text-white bg-indigo-500 whitespace-nowrap border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg disabled:bg-slate-300"
+          className="h-12 whitespace-nowrap rounded border-0 bg-indigo-500 py-2 px-8 text-lg text-white hover:bg-indigo-600 focus:outline-none disabled:bg-slate-300"
           disabled={!valid}
           onClick={addTaskHandler}
           type="submit"

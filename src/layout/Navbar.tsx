@@ -1,21 +1,22 @@
-import { PersonIcon } from "@radix-ui/react-icons";
-import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAppSelector } from "../app/store";
+
 import LogButton from "../components/LogButton";
+import { PersonIcon } from "@radix-ui/react-icons";
 
 const Navbar = () => {
-  const user_id = useAppSelector((state) => state.user.id);
+  const user = useAppSelector((state) => state.user);
+  const user_id = user.id;
   const user_exist = !!user_id;
   return (
-    <header className="bg-slate-200 body-font  shadow-sm text-gray-600 w-full z-10">
-      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <header className="body-font z-10  w-full bg-slate-200 text-gray-600 shadow-sm">
+      <div className="container mx-auto flex flex-col flex-wrap items-center p-5 md:flex-row">
         <Link
           to="/"
-          className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+          className="mb-4 flex flex-col items-center gap-1 font-medium text-gray-900 sm:flex-row sm:gap-2 md:mb-0 md:gap-3"
         >
           {(user_id && (
-            <PersonIcon className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" />
+            <PersonIcon className="h-10 w-10 rounded-full bg-indigo-500 p-2 text-white" />
           )) || (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -24,28 +25,29 @@ const Navbar = () => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
+              className="h-10 w-10 rounded-full bg-indigo-500 p-2 text-white"
               viewBox="0 0 24 24"
             >
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             </svg>
           )}
-          <span className="ml-3 text-xl">Employees ToDo</span>
+          <span className="text-xl font-bold text-indigo-900">EmTasks</span>
         </Link>
-        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <NavLink to="/tasks" className="mr-5 hover:text-gray-900">
+        <nav className="flex flex-col flex-wrap items-center justify-center gap-1 text-base sm:gap-2 md:ml-auto md:mr-5 md:flex-row md:gap-3">
+          <NavLink to="/tasks" className="nav-item">
             Tasks
           </NavLink>
-          <NavLink to="/users" className="mr-5 hover:text-gray-900">
+          <NavLink to="/users" className="nav-item">
             Users
           </NavLink>
-          <NavLink to="/groups" className="mr-5 hover:text-gray-900">
+          <NavLink to="/groups" className="nav-item">
             Groups
           </NavLink>
-          <NavLink to="/notification" className="mr-5 hover:text-gray-900">
+          <NavLink to="/notifications" className="nav-item">
             Notifications
           </NavLink>
         </nav>
+
         <LogButton user_exist={user_exist} />
       </div>
     </header>

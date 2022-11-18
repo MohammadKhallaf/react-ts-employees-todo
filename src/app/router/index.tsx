@@ -7,7 +7,6 @@ import GroupsPage from "../../pages/GroupsPage";
 import HomePage from "../../pages/HomePage";
 import LoginPage from "../../pages/LoginPage";
 import NotificationPage from "../../pages/NotificationPage";
-import RegisterPage from "../../pages/RegisterPage";
 import TasksPage from "../../pages/TasksPage";
 import UsersPage from "../../pages/UsersPage";
 import { supabase } from "../services/api";
