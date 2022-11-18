@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import { Outlet, useLoaderData } from "react-router-dom";
-import { subscribeToNotifications } from "./app/features/notificationSlice";
-import { getUserProfile } from "./app/features/user/read";
-import { supabase } from "./app/services/api";
-import { useAppDispatch } from "./app/store";
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import Layout from "./layout/Layout";
 
 function App() {
+  useEffect(() => {
+    document.getElementById("loader")?.remove();
+  }, []);
   return (
     <Layout>
       <Outlet />
