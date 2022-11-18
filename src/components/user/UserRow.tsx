@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { TrashIcon, BackpackIcon } from "@radix-ui/react-icons";
+import { TrashIcon, BackpackIcon, RocketIcon } from "@radix-ui/react-icons";
 import { useAppDispatch, useAppSelector } from "../../app/store";
 import RadixTooltip from "../Radix/RadixTooltip";
-import { updateUserGroup } from "~/app/features/user/update";
+import { updateUserAdmin, updateUserGroup } from "~/app/features/user/update";
+import { toast } from "react-toastify";
 
 type Props = {
   user: User;
@@ -25,6 +26,15 @@ const UserRow = ({ user }: Props) => {
         group_id: Number(e.target.value),
       })
     );
+  };
+  const makeAdminHandler = () => {
+    dispatch(
+      updateUserAdmin({
+        user_id: taskUser!.id!,
+      })
+    ).then(() => {
+      toast.info("Admin Added");
+    });
   };
   return (
     <tr>
@@ -53,7 +63,19 @@ const UserRow = ({ user }: Props) => {
       </td>
 
       <td className="min-w-[3rem] px-0.5 text-center">
-        <BackpackIcon className="icon hover:text-purple-700" />
+        {user.is_admin ? (
+          <BackpackIcon
+            className="icon text-purple-700 hover:cursor-default"
+            onClick={() => toast.warn("Already Admin")}
+          />
+        ) : (
+          <RadixTooltip tip="Make an admin">
+            <RocketIcon
+              className="icon hover:text-purple-700"
+              onClick={makeAdminHandler}
+            />
+          </RadixTooltip>
+        )}
       </td>
 
       <td className="min-w-[3rem] text-center ">
