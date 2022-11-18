@@ -15,6 +15,8 @@ import {
   deleteTaskThunk,
   notifyTaskThunk,
 } from "../../app/features/task/delete";
+import RadixTooltip from "../Radix/RadixTooltip";
+import { toast } from "react-toastify";
 type Props = {
   task: Task;
 };
@@ -22,14 +24,23 @@ type Props = {
 const TaskRow = ({ task }: Props) => {
   const [content, setContent] = useState(task.content);
   const [edit, setEdit] = useState(false);
+
+  const dispatch = useAppDispatch();
+
   const users = useAppSelector((state) => state.user.users);
   const user = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+
   const taskUser = users.find((user) => user.id === task.user_id);
+
   const updateTaskHandler = () => {
-    dispatch(updateTaskThunk({ task_id: task.id, content }));
+    if (!task.is_complete) {
+      dispatch(updateTaskThunk({ task_id: task.id, content }));
+    } else {
+      toast.warn("You can't edit a completed task");
+    }
     setEdit(false);
   };
+
   const deleteTaskHandler = () => {
     if (user.is_admin) {
       dispatch(deleteTaskThunk(task.id));
@@ -38,6 +49,11 @@ const TaskRow = ({ task }: Props) => {
     }
     setEdit(false);
   };
+
+  const editTaskBtnHandler = () =>
+    (task.is_complete && toast.warn("You can't edit a completed task")) ||
+    setEdit(true);
+
   return (
     <tr>
       <td className="text-center">
@@ -63,7 +79,7 @@ const TaskRow = ({ task }: Props) => {
       <td className="text-center">{task.id}</td>
 
       <td className="text-center">
-        {taskUser?.first_name || user.first_name}{" "}
+        {taskUser?.first_name || user.first_name}
         {taskUser?.last_name || user.last_name}
       </td>
       <td className="text-center">
@@ -74,28 +90,31 @@ const TaskRow = ({ task }: Props) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           disabled={!edit}
-          className="app-input-text w-[85%] w-sm-full disabled:border-none disabled:bg-transparent"
+          className="app-input-text w-sm-full w-[85%] disabled:border-none disabled:bg-transparent"
         />
       </td>
-      <td className="text-center min-w-[3rem] ">
-        {!edit && (
-          <Pencil2Icon
-            className="icon hover:text-green-800"
-            onClick={() => setEdit(true)}
-          />
-        )}
-        {edit && (
-          <CheckIcon
-            className="icon hover:text-green-800"
-            onClick={updateTaskHandler}
-          />
-        )}
+      <td className="min-w-[3rem] text-center ">
+        <RadixTooltip tip="Edit Task">
+          {edit ? (
+            <CheckIcon
+              className="icon hover:text-green-800"
+              onClick={updateTaskHandler}
+            />
+          ) : (
+            <Pencil2Icon
+              className="icon hover:text-green-800"
+              onClick={editTaskBtnHandler}
+            />
+          )}
+        </RadixTooltip>
       </td>
-      <td className="text-center min-w-[3rem] ">
-        <TrashIcon
-          className="icon hover:text-red-900"
-          onClick={deleteTaskHandler}
-        />
+      <td className="min-w-[3rem] text-center ">
+        <RadixTooltip tip="Delete Task">
+          <TrashIcon
+            className="icon hover:text-red-900"
+            onClick={deleteTaskHandler}
+          />
+        </RadixTooltip>
       </td>
     </tr>
   );

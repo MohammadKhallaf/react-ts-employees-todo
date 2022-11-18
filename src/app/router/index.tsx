@@ -8,9 +8,9 @@ import {
   UsersPage,
 } from "~/pages";
 import ErrorPage from "~/pages/ErrorPage";
-import App from "../../App";
-import AuthRoutes from "../../components/routers/AuthRoutes";
-import Layout from "../../layout/Layout";
+import App from "~/App";
+import AuthRoutes from "~/components/routers/AuthRoutes";
+import Layout from "~/layout/Layout";
 
 import { getUserProfile } from "../features/user/read";
 import { store } from "../store";
