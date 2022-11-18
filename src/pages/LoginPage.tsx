@@ -100,14 +100,6 @@ const LoginPage = () => {
               >
                 Sign in
               </button>
-              <Link to="/register" className="flex items-center justify-center">
-                <button
-                  className="transform rounded bg-cyan-500 py-2 px-4 font-medium uppercase text-white shadow transition hover:-translate-y-0.5 hover:bg-cyan-700 hover:shadow-lg"
-                  type="button"
-                >
-                  Register
-                </button>
-              </Link>
             </div>
           </form>
         </div>
