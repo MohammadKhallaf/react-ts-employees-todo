@@ -1,16 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "../../services/api";
 
+type insertProps = {
+  content: string;
+  user_id: string | number;
+};
+
 // Create New Task
 export const insertTaskThunk = createAsyncThunk(
   "tasks/insert",
-  async ({
-    content,
-    user_id,
-  }: {
-    content: string;
-    user_id: string | number;
-  }) => {
+  async ({ content, user_id }: insertProps) => {
     const { data, error } = await supabase
       .from("tasks")
       .insert({ content, user_id })

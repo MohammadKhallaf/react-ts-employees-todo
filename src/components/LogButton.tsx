@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { logOutUser } from "../app/features/userSlice";
-import { useAppDispatch } from "../app/store";
+
+import { useAppDispatch } from "~/app/store";
+import { logOutUser } from "@store/user";
 
 const LogButton = ({ user_exist }: { user_exist: boolean }) => {
   const dispatch = useAppDispatch();

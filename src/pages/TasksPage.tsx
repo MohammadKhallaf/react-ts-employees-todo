@@ -1,7 +1,9 @@
 import { useEffect } from "react";
-import { fetchAllTasksThunk } from "~/app/features/task/read";
+
 import { useAppDispatch, useAppSelector } from "~/app/store";
-import Loader from "~/components/Loader";
+import { fetchAllTasksThunk } from "@store/task/read";
+
+import Loader from "~/components/shared/Loader";
 import PageHeader from "~/components/shared/PageHeader";
 import PageWrapper from "~/components/shared/PageWrapper";
 import TaskForm from "~/components/task/TaskForm";

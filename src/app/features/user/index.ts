@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { supabase } from "../services/api";
-import { getAllUsers, getUserProfile } from "./user/read";
+import { supabase } from "../../services/api";
+import { getAllUsers, getUserProfile } from "./read";
 
 const initialState: User = {
   id: null,
@@ -28,9 +28,11 @@ export const userSlice = createSlice({
         ...payload,
       };
     });
+
     builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
       if (payload) state.users = payload;
     });
+
     builder.addCase(logOutUser.fulfilled, (state, { payload }) => {
       if (payload) state = initialState;
       return state;

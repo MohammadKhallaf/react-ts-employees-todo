@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getAllGroups } from "./group/read";
+import { getAllGroups } from "./read";
 
 const initialState: Group[] = [];
 

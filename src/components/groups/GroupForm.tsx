@@ -1,22 +1,27 @@
 import type React from "react";
-import { insertGroup } from "~/app/features/group/insert";
+
 import { useAppDispatch } from "~/app/store";
+import { insertGroup } from "@store/group/insert";
+
+import SubmitButton from "../shared/SubmitButton";
 
 const GroupsForm = () => {
   const dispatch = useAppDispatch();
+
   const createGroupHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(
-      insertGroup(
-        (e.target as typeof e.target & { label: { value: string } }).label.value
-      )
-    );
+
+    const form = e.target as typeof e.target & { label: { value: string } };
+    const groupLabel = form.label.value;
+
+    dispatch(insertGroup(groupLabel));
   };
+
   return (
     <form onSubmit={createGroupHandler}>
       <div className="mx-auto flex w-full flex-col items-end space-y-4 px-8 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-0 lg:w-2/3">
         <div className="relative w-full flex-grow">
-          <label htmlFor="task" className="text-sm leading-7 text-gray-600">
+          <label htmlFor="label" className="text-sm leading-7 text-gray-600">
             Group
           </label>
           <input
@@ -28,12 +33,7 @@ const GroupsForm = () => {
           />
         </div>
 
-        <button
-          className="h-12 whitespace-nowrap rounded border-0 bg-indigo-500 py-2 px-8 text-lg text-white hover:bg-indigo-600 focus:outline-none disabled:bg-slate-300"
-          type="submit"
-        >
-          Add Group
-        </button>
+        <SubmitButton text="Add Group" />
       </div>
     </form>
   );

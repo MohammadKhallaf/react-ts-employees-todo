@@ -1,4 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
+import { getUserProfile } from "@store/user/read";
+
+import App from "~/App";
+import Layout from "~/layout/Layout";
+import ErrorPage from "~/pages/ErrorPage";
 import {
   GroupsPage,
   HomePage,
@@ -7,12 +12,8 @@ import {
   TasksPage,
   UsersPage,
 } from "~/pages";
-import ErrorPage from "~/pages/ErrorPage";
-import App from "~/App";
-import AuthRoutes from "~/components/routers/AuthRoutes";
-import Layout from "~/layout/Layout";
 
-import { getUserProfile } from "../features/user/read";
+import AuthRoutes from "~/components/routers/AuthRoutes";
 import { store } from "../store";
 
 export const router = createBrowserRouter([

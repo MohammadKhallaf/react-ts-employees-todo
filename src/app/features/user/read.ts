@@ -1,17 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "~/app/services/api";
 
+// Fetch All Users
 export const getAllUsers = createAsyncThunk("user/list", async () => {
   const { data: profiles, error } = await supabase.from("profiles").select("*");
   return profiles;
 });
-// Read All Tasks
+
+// Fetch Current User Profile
 export const getUserProfile = createAsyncThunk(
   "user/profile",
   async (_, thunkAPI) => {
-    // const userInStore = thunkAPI.getState().user.id;
-    // console.log(userInStore);
-    // if (userInStore) return;
     const {
       data: { session },
     } = await supabase.auth.getSession();

@@ -23,3 +23,10 @@ interface Group {
   id: number;
   label: string;
 }
+
+interface Notification {
+  id: uuid;
+  user_id: uuid;
+  task_id: uuid;
+  content: string;
+}

@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { getAllGroups } from "~/app/features/group/read";
+
+import { useAppDispatch } from "~/app/store";
+import { getAllGroups } from "@store/group/read";
+
 import PageHeader from "~/components/shared/PageHeader";
 import PageWrapper from "~/components/shared/PageWrapper";
-import { useAppDispatch } from "../app/store";
-import UserForm from "../components/user/UserForm";
-import UserList from "../components/user/UserList";
+import UserForm from "~/components/user/UserForm";
+import UserList from "~/components/user/UserList";
 
 const UsersPage = () => {
   const dispatch = useAppDispatch();

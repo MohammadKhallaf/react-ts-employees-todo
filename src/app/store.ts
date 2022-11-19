@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
-import tasksReducer from "./features/tasksSlice";
-import userReducer from "./features/userSlice";
-import notifsReducer from "./features/notificationSlice";
-import groupReducer from "./features/groupSlice";
+
+import tasksReducer from "./features/task";
+import userReducer from "./features/user";
+import notifsReducer from "./features/notifications";
+import groupReducer from "./features/group";
 
 export const store = configureStore({
   reducer: {

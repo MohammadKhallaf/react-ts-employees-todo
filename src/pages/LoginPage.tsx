@@ -1,20 +1,24 @@
 import React, { useEffect } from "react";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+
+import { getUserProfile } from "@store/user/read";
+import { supabase } from "~/app/services/api";
+
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "~/app/store";
+
 import { toast } from "react-toastify";
-import { getUserProfile } from "~/app/features/user/read";
-import { supabase } from "../app/services/api";
-import { useAppDispatch, useAppSelector } from "../app/store";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user_id = useAppSelector((state) => state.user.id);
+
   useEffect(() => {
-    if (user_id) {
-      navigate("/");
-    }
+    if (user_id) navigate("/");
+
     document.getElementById("loader")?.remove();
   }, []);
+
   const loginHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -35,6 +39,7 @@ const LoginPage = () => {
     toast.success(`Welcome ${data.user?.user_metadata.first_name}`);
     navigate("/");
   };
+
   return (
     <div className="container mx-auto grid h-screen items-center">
       <div className="mx-auto w-2/3 p-5 lg:w-1/2">

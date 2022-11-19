@@ -20,7 +20,8 @@ export const updateTaskThunk = createAsyncThunk(
     if (data?.length && data[0]) return data[0] as Task;
   }
 );
-// Update a Task
+
+// Update a Task State
 export const updateTaskStateThunk = createAsyncThunk(
   "tasks/update-state",
   async ({

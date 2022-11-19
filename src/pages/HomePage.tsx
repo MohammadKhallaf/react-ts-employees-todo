@@ -1,6 +1,8 @@
 import { useAppSelector } from "~/app/store";
+
 import PageWrapper from "~/components/shared/PageWrapper";
-import ContentCard from "~/components/ContentCard";
+import ContentCard from "~/components/shared/ContentCard";
+
 import {
   BellIcon,
   DashboardIcon,

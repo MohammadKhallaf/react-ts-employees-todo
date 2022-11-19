@@ -13,6 +13,7 @@ export const updateUserGroup = createAsyncThunk(
     if (user) return user;
   }
 );
+
 export const updateUserAdmin = createAsyncThunk(
   "user/group_update",
   async ({ user_id }: { user_id: uuid }) => {

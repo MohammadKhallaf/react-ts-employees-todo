@@ -1,21 +1,10 @@
 import { useState } from "react";
-import {
-  Pencil2Icon,
-  TrashIcon,
-  CheckIcon,
-  CheckboxIcon,
-  BoxIcon,
-} from "@radix-ui/react-icons";
-import { useAppDispatch, useAppSelector } from "../../app/store";
-import {
-  updateTaskStateThunk,
-  updateTaskThunk,
-} from "../../app/features/task/update";
-import {
-  deleteTaskThunk,
-  notifyTaskThunk,
-} from "../../app/features/task/delete";
-import { deleteTaskOnNotifThunk, Notification } from "../../app/features/notificationSlice";
+
+import { useAppDispatch, useAppSelector } from "~/app/store";
+import { deleteTaskOnNotifThunk } from "@store/notifications/delete";
+
+import { TrashIcon } from "@radix-ui/react-icons";
+
 type Props = {
   notification: Notification;
 };
@@ -28,10 +17,7 @@ const NotificationRow = ({ notification }: Props) => {
 
   const dispatch = useAppDispatch();
   const taskUser = users.find((user) => user.id === notification.user_id);
-  const updateTaskHandler = () => {
-    // dispatch(updateTaskThunk({ task_id: task.id, content }));
-    setEdit(false);
-  };
+
   const deleteTaskHandler = () => {
     if (user.is_admin) {
       dispatch(deleteTaskOnNotifThunk(notification.task_id));
@@ -52,13 +38,13 @@ const NotificationRow = ({ notification }: Props) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           disabled={!edit}
-          className="app-input-text w-[85%] w-sm-full disabled:border-none disabled:bg-transparent pl-0"
+          className="app-input-text w-sm-full w-[85%] pl-0 disabled:border-none disabled:bg-transparent"
         />
       </td>
 
-      <td className="text-center min-w-[3rem] ">
+      <td className="min-w-[3rem] text-center ">
         <TrashIcon
-          className="icon text-red-900 hover:text-red-700 hover:scale-110 transition-all"
+          className="icon text-red-900 transition-all hover:scale-110 hover:text-red-700"
           onClick={deleteTaskHandler}
         />
       </td>

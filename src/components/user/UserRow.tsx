@@ -1,23 +1,27 @@
 import React, { useState } from "react";
-import { TrashIcon, BackpackIcon, RocketIcon } from "@radix-ui/react-icons";
-import { useAppDispatch, useAppSelector } from "../../app/store";
-import RadixTooltip from "../Radix/RadixTooltip";
-import { updateUserAdmin, updateUserGroup } from "~/app/features/user/update";
+import { useAppDispatch, useAppSelector } from "~/app/store";
+import { updateUserAdmin, updateUserGroup } from "@store/user/update";
+
 import { toast } from "react-toastify";
+import { TrashIcon, BackpackIcon, RocketIcon } from "@radix-ui/react-icons";
+import RadixTooltip from "../Radix/RadixTooltip";
 
 type Props = {
   user: User;
 };
 
 const UserRow = ({ user }: Props) => {
+  const dispatch = useAppDispatch();
+
   const users = useAppSelector((state) => state.user.users);
   const groups = useAppSelector((state) => state.groups);
+
   const taskUser = users.find((userInst) => userInst.id === user.id);
+
   const [userGroup, setUserGroup] = useState(
     groups.find((group) => group.id == taskUser?.group)?.id
   );
 
-  const dispatch = useAppDispatch();
   const groupSelectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setUserGroup(Number(e.target.value));
     dispatch(
@@ -27,6 +31,7 @@ const UserRow = ({ user }: Props) => {
       })
     );
   };
+
   const makeAdminHandler = () => {
     dispatch(
       updateUserAdmin({
@@ -36,6 +41,7 @@ const UserRow = ({ user }: Props) => {
       toast.info("Admin Added");
     });
   };
+
   return (
     <tr>
       <td className="text-center">

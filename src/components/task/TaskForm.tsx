@@ -1,23 +1,26 @@
 import { useState } from "react";
-import { insertTaskThunk } from "../../app/features/task/insert";
-import { useAppDispatch, useAppSelector } from "../../app/store";
+
+import { useAppDispatch, useAppSelector } from "~/app/store";
+import { insertTaskThunk } from "@store/task/insert";
+
+import SubmitButton from "../shared/SubmitButton";
 
 const TaskForm = () => {
+  const dispatch = useAppDispatch();
+
   const users = useAppSelector((state) => state.user.users);
   const userInst = useAppSelector((state) => state.user);
-  const userInsID = userInst.id;
-  const [user, setUser] = useState<string | number | null>(userInsID);
+
   const [task, setTask] = useState<string>("");
   const [valid, setValid] = useState(false);
 
-  const dispatch = useAppDispatch();
+  const userInsID = userInst.id;
+  const [user, setUser] = useState<string | number | null>(userInsID);
 
-  const addTaskHandler = () => {
-    if (user) dispatch(insertTaskThunk({ content: task, user_id: user }));
-  };
   const userSelectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setUser(e.target.value);
   };
+
   const taskDetailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
       setValid(true);
@@ -27,9 +30,12 @@ const TaskForm = () => {
 
     setTask(e.target.value);
   };
+
   const ceateTaskHandler = (e: React.FormEvent) => {
     e.preventDefault();
+    if (user) dispatch(insertTaskThunk({ content: task, user_id: user }));
   };
+
   return (
     <form onSubmit={ceateTaskHandler}>
       <div className="mx-auto flex w-full flex-col items-end space-y-4 px-8 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-0 lg:w-2/3">
@@ -68,14 +74,7 @@ const TaskForm = () => {
           />
         </div>
 
-        <button
-          className="h-12 whitespace-nowrap rounded border-0 bg-indigo-500 py-2 px-8 text-lg text-white hover:bg-indigo-600 focus:outline-none disabled:bg-slate-300"
-          disabled={!valid}
-          onClick={addTaskHandler}
-          type="submit"
-        >
-          Add Task
-        </button>
+        <SubmitButton text="Add Task" validForm={valid} />
       </div>
     </form>
   );

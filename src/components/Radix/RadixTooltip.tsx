@@ -1,5 +1,7 @@
 import React from "react";
+
 import * as Tooltip from "@radix-ui/react-tooltip";
+
 import "./RadixTooltip.css";
 
 type Props = {

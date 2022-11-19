@@ -1,4 +1,11 @@
 import { useState } from "react";
+
+import { useAppDispatch, useAppSelector } from "~/app/store";
+import { updateTaskStateThunk, updateTaskThunk } from "@store/task/update";
+import { deleteTaskThunk, notifyTaskThunk } from "@store/task/delete";
+
+import { toast } from "react-toastify";
+import RadixTooltip from "../Radix/RadixTooltip";
 import {
   Pencil2Icon,
   TrashIcon,
@@ -6,29 +13,19 @@ import {
   CheckboxIcon,
   BoxIcon,
 } from "@radix-ui/react-icons";
-import { useAppDispatch, useAppSelector } from "../../app/store";
-import {
-  updateTaskStateThunk,
-  updateTaskThunk,
-} from "../../app/features/task/update";
-import {
-  deleteTaskThunk,
-  notifyTaskThunk,
-} from "../../app/features/task/delete";
-import RadixTooltip from "../Radix/RadixTooltip";
-import { toast } from "react-toastify";
+
 type Props = {
   task: Task;
 };
 
 const TaskRow = ({ task }: Props) => {
-  const [content, setContent] = useState(task.content);
-  const [edit, setEdit] = useState(false);
-
   const dispatch = useAppDispatch();
 
   const users = useAppSelector((state) => state.user.users);
   const user = useAppSelector((state) => state.user);
+
+  const [content, setContent] = useState(task.content);
+  const [edit, setEdit] = useState(false);
 
   const taskUser = users.find((user) => user.id === task.user_id);
 
@@ -50,9 +47,14 @@ const TaskRow = ({ task }: Props) => {
     setEdit(false);
   };
 
-  const editTaskBtnHandler = () =>
+  const editTaskBtnHandler = () => {
     (task.is_complete && toast.warn("You can't edit a completed task")) ||
-    setEdit(true);
+      setEdit(true);
+  };
+
+  const completeTaskhandler = () => {
+    dispatch(updateTaskStateThunk({ task_id: task.id, is_complete: true }));
+  };
 
   return (
     <tr>
@@ -68,20 +70,18 @@ const TaskRow = ({ task }: Props) => {
             width="1.8rem"
             height="1.8rem"
             className="px-0.5 hover:cursor-pointer hover:text-cyan-700"
-            onClick={() =>
-              dispatch(
-                updateTaskStateThunk({ task_id: task.id, is_complete: true })
-              )
-            }
+            onClick={completeTaskhandler}
           />
         )}
       </td>
+
       <td className="text-center">{task.id}</td>
 
       <td className="text-center">
         {taskUser?.first_name || user.first_name}
         {taskUser?.last_name || user.last_name}
       </td>
+
       <td className="text-center">
         <input
           type="text"
@@ -93,6 +93,7 @@ const TaskRow = ({ task }: Props) => {
           className="app-input-text w-sm-full w-[85%] disabled:border-none disabled:bg-transparent"
         />
       </td>
+
       <td className="min-w-[3rem] text-center ">
         <RadixTooltip tip="Edit Task">
           {edit ? (
@@ -108,6 +109,7 @@ const TaskRow = ({ task }: Props) => {
           )}
         </RadixTooltip>
       </td>
+
       <td className="min-w-[3rem] text-center ">
         <RadixTooltip tip="Delete Task">
           <TrashIcon

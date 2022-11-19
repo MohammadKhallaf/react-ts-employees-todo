@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "../../services/api";
 
+type taskUserProps = { user_id: uuid; task_id: uuid };
+
 // Delete a Task
 export const deleteTaskThunk = createAsyncThunk(
   "tasks/delete",
@@ -14,10 +16,11 @@ export const deleteTaskThunk = createAsyncThunk(
     if (data?.length && data[0]) return data[0] as Task;
   }
 );
+
 // Notify Admin to delete a Task
 export const notifyTaskThunk = createAsyncThunk(
   "tasks/notify",
-  async ({ user_id, task_id }: { user_id: uuid; task_id: uuid }) => {
+  async ({ user_id, task_id }: taskUserProps) => {
     const { data, error } = await supabase
       .from("notifications")
       .insert({ user_id, task_id })

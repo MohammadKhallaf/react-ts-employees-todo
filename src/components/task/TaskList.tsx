@@ -5,6 +5,7 @@ import TaskRow from "./TaskRow";
 type Props = {
   tasks: Task[];
 };
+
 const TaskList = ({ tasks }: Props) => {
   return (
     <table className="mt-5 w-full ">

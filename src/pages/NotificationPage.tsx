@@ -1,6 +1,6 @@
 import PageHeader from "~/components/shared/PageHeader";
 import PageWrapper from "~/components/shared/PageWrapper";
-import NotificationsList from "../components/notifications/NotificationsList";
+import NotificationsList from "~/components/notifications/NotificationsList";
 
 const NotificationPage = () => {
   return (

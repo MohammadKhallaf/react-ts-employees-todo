@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+
+import { useRegister } from "~/app/services/api";
+
 import { toast } from "react-toastify";
-import { useRegister } from "../../app/services/api";
+import SubmitButton from "../shared/SubmitButton";
 
 const UserForm = () => {
   const register = useRegister();
@@ -102,13 +105,7 @@ const UserForm = () => {
         </div>
       </div>
 
-      <button
-        className="mt-5 self-end whitespace-nowrap rounded border-0 bg-indigo-500 py-2 px-8 text-lg text-white hover:bg-indigo-600 focus:outline-none disabled:bg-slate-300"
-        type="submit"
-        // disabled={!valid}
-      >
-        Invite User
-      </button>
+      <SubmitButton text="Invite User" />
     </form>
   );
 };

@@ -1,7 +1,9 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+
+import { useAppSelector } from "~/app/store";
+
 import { toast } from "react-toastify";
-import { useAppSelector } from "../../app/store";
 
 type Props = {
   role: "admin" | "user";
@@ -11,6 +13,7 @@ type Props = {
 const AuthRoutes = ({ role, children }: Props) => {
   const user_id = useAppSelector((state) => state.user.id);
   const is_admin = useAppSelector((state) => state.user.is_admin);
+
   if (!user_id) {
     toast.error("You are not logged in!");
     return <Navigate to={"/login"} />;

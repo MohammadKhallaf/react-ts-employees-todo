@@ -1,21 +1,24 @@
-import { Link, NavLink } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/store";
-
-import LogButton from "../components/LogButton";
-import { PersonIcon } from "@radix-ui/react-icons";
-import { getAllNotifs } from "~/app/features/notifications/read";
 import { useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
+
+import { useAppDispatch, useAppSelector } from "~/app/store";
+import { getAllNotifs } from "@store/notifications/read";
+
+import LogButton from "~/components/LogButton";
+import { PersonIcon } from "@radix-ui/react-icons";
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const notifications = useAppSelector((state) => state.notifs.list);
+
   const user_id = user.id;
   const user_exist = !!user_id;
 
-  const dispatch = useAppDispatch();
   useEffect(() => {
     if (user.is_admin) dispatch(getAllNotifs());
   }, []);
+
   return (
     <header className="body-font z-10  w-full bg-slate-200 text-gray-600 shadow-sm">
       <div className="container mx-auto flex flex-col flex-wrap items-center p-5 md:flex-row">
